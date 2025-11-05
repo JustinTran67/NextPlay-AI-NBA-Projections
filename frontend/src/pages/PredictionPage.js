@@ -17,10 +17,10 @@ export default function PredictionPage() {
     }
 
     return (
-        <div>
+        <div className="">
             <PlayerPredict name={name} team={team} opponent={opponent} date={date} home={home} />
             <div>
-                <button onClick={handleClickToHomePage}>Get more predictions!</button>
+                <button className="rounded-lg h-[40px] w-[300px] px-4 font-bold bg-nbared mb-40 hover:bg-nbared2 transition duration-200 ease-in-out" onClick={handleClickToHomePage}>Get more predictions!</button>
             </div>
         </div>
     )

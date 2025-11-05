@@ -5,15 +5,53 @@ export default function Home() {
     const [players, setPlayers] = useState([]);
     const [filterPlayers, setFilterPlayers] = useState("");
 
+    const teams = [
+        "Atlanta Hawks",
+        "Boston Celtics",
+        "Brooklyn Nets",
+        "Charlotte Hornets",
+        "Chicago Bulls",
+        "Cleveland Cavaliers",
+        "Dallas Mavericks",
+        "Denver Nuggets",
+        "Detroit Pistons",
+        "Golden State Warriors",
+        "Houston Rockets",
+        "Indiana Pacers",
+        "Los Angeles Clippers",
+        "Los Angeles Lakers",
+        "Memphis Grizzlies",
+        "Miami Heat",
+        "Milwaukee Bucks",
+        "Minnesota Timberwolves",
+        "New Orleans Pelicans",
+        "New York Knicks",
+        "Oklahoma City Thunder",
+        "Orlando Magic",
+        "Philadelphia 76ers",
+        "Phoenix Suns",
+        "Portland Trail Blazers",
+        "Sacramento Kings",
+        "San Antonio Spurs",
+        "Toronto Raptors",
+        "Utah Jazz",
+        "Washington Wizards"
+    ]
+
     useEffect(() => {
         fetch('http://localhost:8000/api/players/')
             .then(response => response.json())
-            .then(data => setPlayers(data))
+            .then(data => {
+                const filteredData = data.filter(player => teams.includes(player.team));
+                setPlayers(filteredData);
+            })
     }, []);
 
     return (
-        <div className="front-page">
-            <h1>NextPlay AI</h1>
+        <div className="flex flex-col items-center">
+            <h1 className="mt-20 mb-20 justify-center text-center tracking-wide text-[64px] font-bold">
+                NextPlay AI 🏀
+            </h1>
             <SearchBar filterPlayers={filterPlayers} setFilterPlayers={setFilterPlayers} />
             <PlayerList playerData={players} filterPlayers={filterPlayers} />
         </div>
@@ -22,16 +60,17 @@ export default function Home() {
 
 function SearchBar({filterPlayers, setFilterPlayers}) {
     return (
-        <div className="search-bar">
-            <input type="text" value={filterPlayers} onChange={(e) => setFilterPlayers(e.target.value)} placeholder="Search players to get projections..." />
+        <div className="">
+            <input className="rounded-3xl mb-10 p-2 h-[50px] w-[600px] px-8 bg-accent placeholder-silver"
+q               type="text" value={filterPlayers} onChange={(e) => setFilterPlayers(e.target.value)} placeholder="Search players to get projections..."
+            />
         </div>
     )
 }
 
 function PlayerList({playerData, filterPlayers}) {
     return (
-        <square className="player-list">
-            <h2>Players</h2>
+        <div className="items-center justify-center w-[450px] py-4 rounded-lg bg-secondary">
             <ul>
                 {playerData.map((player) => 
                     {return (player.name.toLowerCase().includes(filterPlayers.toLowerCase()) || player.team.toLowerCase().includes(filterPlayers.toLowerCase())) ?
@@ -41,7 +80,7 @@ function PlayerList({playerData, filterPlayers}) {
                     : null}
                 )}
             </ul>
-        </square>
+        </div>
     )
 }
 
@@ -53,8 +92,10 @@ function PlayerCard({ name, team }) {
     }
 
     return (
-        <div>
-            <button onClick={handleClick}>{name} | {team}</button>
+        <div className="">
+            <button className="rounded-lg p-2 w-[400px] px-4 text-left font-semibold bg-accent shadow-lg hover:bg-secondary transition duration-200 ease-in-out" onClick={handleClick}>
+                {name} | {team}
+            </button>
         </div>
     )
 }

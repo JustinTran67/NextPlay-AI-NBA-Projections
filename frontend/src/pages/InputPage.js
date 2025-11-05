@@ -1,5 +1,5 @@
 import InputGameData from '../components/InputGameData';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 export default function InputPage() {
     const location = useLocation();
@@ -7,8 +7,7 @@ export default function InputPage() {
     const teamName = location.state?.teamName
 
     return (
-        <div>
-            <Link to="/">Home</Link>
+        <div className="">
             <InputGameData playerName={playerName} teamName={teamName}/>
         </div>
     )

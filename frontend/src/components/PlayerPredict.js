@@ -39,51 +39,58 @@ export default function PlayerPredict({ name, team, opponent, date, home }) {
     }, [name, opponent, date, home]);
     
     return (
-        <div>
+        <div className="flex flex-col items-center">
             {predictionData ? (
-                 <>
-                    <h2>{predictionData.player} vs {predictionData.opponent}</h2>
-                    <p>Minutes: {predictionData.predictions.minutes}</p>
-                    <p>Points: {predictionData.predictions.points}</p>
-                    <p>Assists: {predictionData.predictions.assists}</p>
-                    <p>Blocks: {predictionData.predictions.blocks}</p>
-                    <p>Steals: {predictionData.predictions.steals}</p>
-                    <p>Field Goal Percent: {predictionData.predictions.fg_percent}</p>  
-                    <p>Three Pointers Attempted: {predictionData.predictions.threepa}</p>
-                    <p>Three Pointers:{predictionData.predictions.threep}</p>
-                    <p>Three Point Percent: {predictionData.predictions.threep_percent}</p>
-                    <p>Free Throws Attempted: {predictionData.predictions.fta}</p>
-                    <p>Free Throws: {predictionData.predictions.ft}</p>
-                    <p>Free Throw Percent: {predictionData.predictions.ft_percent}</p>
-                    <p>Rebounds: {predictionData.predictions.total_rebounds}</p>
-                    <p>Personal Fouls: {predictionData.predictions.personal_fouls}</p>
-                    <p>Turnovers: {predictionData.predictions.turnovers}</p>
-                </>
+                 <div className="flex flex-col items-center">
+                    <div>
+                        <h2 className="font-bold text-[32px] mb-5">{predictionData.player} vs {predictionData.opponent}</h2>
+                    </div>
+                    <div className="w-[200px] rounded-xl p-8 bg-secondary mb-10 font-semibold text-left">
+                        <p>Minutes: {predictionData.predictions.minutes.toFixed(2)}</p>
+                        <p>Points: {Math.round(predictionData.predictions.points)}</p>
+                        <p>Assists: {Math.round(predictionData.predictions.assists)}</p>
+                        <p>Blocks: {Math.round(predictionData.predictions.blocks)}</p>
+                        <p>Steals: {Math.round(predictionData.predictions.steals)}</p>
+                        <p>Field Goal Percent: {Math.round(predictionData.predictions.fg_percent * 100)}%</p>  
+                        <p>Three Pointers Attempted: {Math.round(predictionData.predictions.threepa)}</p>
+                        <p>Three Pointers:{Math.round(predictionData.predictions.threep)}</p>
+                        <p>Three Point Percent: {Math.round(predictionData.predictions.threep_percent * 100)}%</p>
+                        <p>Free Throws Attempted: {Math.round(predictionData.predictions.fta)}</p>
+                        <p>Free Throws: {Math.round(predictionData.predictions.ft)}</p>
+                        <p>Free Throw Percent: {Math.round(predictionData.predictions.ft_percent * 100)}%</p>
+                        <p>Rebounds: {Math.round(predictionData.predictions.total_rebounds)}</p>
+                        <p>Personal Fouls: {Math.round(predictionData.predictions.personal_fouls)}</p>
+                        <p>Turnovers: {Math.round(predictionData.predictions.turnovers)}</p>
+                    </div>
+                </div>
                 ) : (
                      <p>Loading prediction...</p>
                 )}
             <div>
-                <RecommendedPlayers team={team} opponent={opponent} />
+                <RecommendedPlayers name={name} team={team} opponent={opponent} />
             </div>
         </div>
     )
 }
 
-function RecommendedPlayers({ team, opponent }) {
+function RecommendedPlayers({ name, team, opponent }) {
     const [recommendedPlayers, setRecommendedPlayers] = useState([]);
 
     useEffect(() => {
         fetch('http://localhost:8000/api/players/')
             .then(response => response.json())
             .then(data => {
-                const filteredPlayers = data.filter(player => player.team === team || player.team === opponent);
+                const filteredPlayers = data.filter(player => (player.team === team || player.team === opponent) && player.name !== name);
                 setRecommendedPlayers(filteredPlayers);
             })
-    }, [team, opponent]);
+    }, [name, team, opponent]);
 
     return (
-        <div>
-            <h3>Your next recommended predictions</h3>
+        <div className="flex flex-col items-center">
+            <div>
+                <h3 className="font-bold text-[24px] mb-2">Recommended predictions</h3>
+            </div>
+            <div className="w-[460px] rounded-xl p-8 bg-secondary mb-10">
             <ul>
                 {recommendedPlayers.map((player) => 
                     <li key={player.id}>
@@ -91,6 +98,7 @@ function RecommendedPlayers({ team, opponent }) {
                     </li>
                 )}
             </ul>
+            </div>
         </div>
     )
 }
@@ -104,7 +112,7 @@ function PlayerCard({ name, team }) {
 
     return (
         <div>
-            <button onClick={handleClick}>{name} | {team}</button>
+            <button className="rounded-lg p-2 w-[400px] px-4 text-left font-semibold bg-accent shadow-lg hover:bg-secondary transition duration-200 ease-in-out" onClick={handleClick}>{name} | {team}</button>
         </div>
     )
 }
