@@ -4,12 +4,12 @@ from email.utils import format_datetime
 import os
 import pandas as pd
 
-path = os.path.join('backend', 'ml_models', 'PlayerStatistics.csv')
+path = os.path.join('backend', 'csv_files', 'PlayerStatistics.csv')
 df = pd.read_csv(path)
 
 df['gameDate'] = pd.to_datetime(df['gameDate'].astype(str).str[:10], errors='coerce').dt.date
 
-df_recent = df[df['gameDate'] >= pd.to_datetime('2022-01-01').date()].copy()
+df_recent = df[df['gameDate'] >= pd.to_datetime('2025-01-01').date()].copy()
 
 df_recent.loc[df_recent['playerteamCity'] == 'LA', 'playerteamCity'] = 'Los Angeles'
 
