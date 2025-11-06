@@ -53,7 +53,7 @@ export default function PlayerPredict({ name, team, opponent, date, home }) {
                         <p>Steals: {Math.round(predictionData.predictions.steals)}</p>
                         <p>Field Goal Percent: {Math.round(predictionData.predictions.fg_percent * 100)}%</p>  
                         <p>Three Pointers Attempted: {Math.round(predictionData.predictions.threepa)}</p>
-                        <p>Three Pointers:{Math.round(predictionData.predictions.threep)}</p>
+                        <p>Three Pointers: {Math.round(predictionData.predictions.threep)}</p>
                         <p>Three Point Percent: {Math.round(predictionData.predictions.threep_percent * 100)}%</p>
                         <p>Free Throws Attempted: {Math.round(predictionData.predictions.fta)}</p>
                         <p>Free Throws: {Math.round(predictionData.predictions.ft)}</p>

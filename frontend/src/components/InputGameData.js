@@ -77,7 +77,7 @@ export default function InputGameData({ playerName, teamName }) {
 
     return (
         <div className="rounded-xl p-8 bg-secondary">
-            <h1 className="font-bold text-[32px] mb-40">Input Game Day for {gameData.playerName}</h1>
+            <h1 className="font-bold text-[32px] mb-40">Enter Game Night for {gameData.playerName}</h1>
             <div className="mb-10 font-semibold">
                 <select className="rounded-lg h-[40px] w-[200px] px-4 bg-accent m-1 hover:bg-secondary transition duration-200 ease-in-out" name="month" value={gameData.month} onChange={handleDateChange}>
                     <option value="">Month</option>
