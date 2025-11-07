@@ -40,6 +40,7 @@ export default function Home() {
 
     useEffect(() => {
         const API_BASE = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000';
+        console.log("API base URL:", process.env.REACT_APP_API_BASE_URL);
         fetch(`${API_BASE}/api/players/`)
             .then(response => response.json())
             .then(data => {
