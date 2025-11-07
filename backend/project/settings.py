@@ -72,7 +72,10 @@ MIDDLEWARE = [
 ]
 
 # Will be changed after vercel deployment
-CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', 'http://localhost:3000').split(',')
+CORS_ALLOWED_ORIGINS = os.environ.get(
+    'CORS_ALLOWED_ORIGINS',
+    'http://localhost:3000,https://nextplay-ai.vercel.app'
+).split(',')
 
 ROOT_URLCONF = 'project.urls'
 
