@@ -19,6 +19,11 @@ from ml_models.train_model2 import train_and_save_model
 HF_REPO = os.getenv("HF_MODEL_REPO")
 MAX_ROWS = int(os.getenv("MAX_ROWS", 15000))
 
+
+os.environ['KAGGLE_CONFIG_DIR'] = os.path.expanduser("~/.kaggle")
+if not os.getenv("KAGGLE_USERNAME") or not os.getenv("KAGGLE_KEY"):
+    raise EnvironmentError("KAGGLE_USERNAME or KAGGLE_KEY environment variable not set.")
+
 def download_latest_dataset():
     api = KaggleApi()
     api.authenticate()

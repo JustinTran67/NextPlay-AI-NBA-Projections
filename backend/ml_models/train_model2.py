@@ -20,10 +20,6 @@ from ml_models.data_preperation import add_recent_average_features
 
 
 def train_and_save_model():
-    """
-    Fetches PlayerGameStat data from Django ORM, retrains RandomForestRegressor,
-    saves model to ml_models/player_multioutput_projection.pkl, and returns path.
-    """
     print("Fetching data from Django ORM")
     qs = PlayerGameStat.objects.all().values(
         'player_id',
@@ -48,7 +44,7 @@ def train_and_save_model():
     )
     df = pd.DataFrame(list(qs))
     if df.empty:
-        print("⚠️ No data found in PlayerGameStat — skipping training.")
+        print("No data found in PlayerGameStat — skipping training.")
         return None
 
     print("Preprocessing data")
@@ -68,7 +64,7 @@ def train_and_save_model():
             'threepa', 'threep', 'threep_percent', 'fta', 'ft', 'ft_percent',
             'total_rebounds', 'personal_fouls', 'turnovers']]
 
-    print("🤖 Training model...")
+    print("Training model")
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
     model = RandomForestRegressor(n_estimators=200, random_state=42, n_jobs=-1)
