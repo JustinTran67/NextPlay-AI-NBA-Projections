@@ -26,8 +26,17 @@ db.sqlite3
 *.log
 staticfiles/
 media/
-backend/data/
-backend/ml_models/player_multioutput_projection.pkl
+
+# Data and models
+data/
+ml_models/*.pkl
+*.joblib
+*.csv
+*.zip
+
+# Kaggle / API credentials
+.kaggle/
+*.json
 
 # OS
 .DS_Store

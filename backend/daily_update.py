@@ -16,7 +16,7 @@ django.setup()
 from backendApp.models import PlayerGameStat, Player
 from ml_models.train_model2 import train_and_save_model
 
-HF_REPO = os.getenv("HF_REPO")
+HF_REPO = os.getenv("HF_MODEL_REPO")
 MAX_ROWS = int(os.getenv("MAX_ROWS", 15000))
 
 def download_latest_dataset():
