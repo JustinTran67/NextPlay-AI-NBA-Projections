@@ -52,7 +52,7 @@ export default function Home() {
     return (
         <div className="flex flex-col items-center">
             <h1 className="mt-20 mb-20 justify-center text-center tracking-wide text-[64px] font-bold">
-                NextPlay AI 🏀
+                NextPlay 🏀
             </h1>
             <SearchBar filterPlayers={filterPlayers} setFilterPlayers={setFilterPlayers} />
             <PlayerList playerData={players} filterPlayers={filterPlayers} />

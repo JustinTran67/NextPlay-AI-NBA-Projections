@@ -26,6 +26,8 @@ db.sqlite3
 *.log
 staticfiles/
 media/
+backend/data/
+backend/ml_models/player_multioutput_projection.pkl
 
 # OS
 .DS_Store

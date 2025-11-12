@@ -1,0 +1,121 @@
+import os
+import sys
+import django
+import pandas as pd
+from datetime import datetime
+from kaggle.api.kaggle_api_extended import KaggleApi
+from huggingface_hub import upload_file
+import math
+
+# Add project directory to sys.path and set Django settings
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(BASE_DIR)
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')  # adjust project name
+django.setup()
+
+from backendApp.models import PlayerGameStat, Player
+from ml_models.train_model2 import train_and_save_model
+
+HF_REPO = os.getenv("HF_REPO")
+MAX_ROWS = int(os.getenv("MAX_ROWS", 15000))
+
+def download_latest_dataset():
+    api = KaggleApi()
+    api.authenticate()
+    dataset = "eoinamoore/historical-nba-data-and-player-box-scores"
+    api.dataset_download_files(dataset, path="data/", unzip=True)
+    print("Downloaded latest Kaggle dataset")
+
+def parse_float(value):
+    if value is None:
+        return None
+    try:
+        f = float(value)
+        if math.isnan(f):
+            return None
+        return f
+    except (ValueError, TypeError):
+        return None
+
+def update_database():
+    new_data = pd.read_csv("data/PlayerStatistics.csv")
+
+    new_data['gameDate'] = pd.to_datetime(new_data['gameDate'].astype(str).str[:10], errors='coerce').dt.date
+
+    latest_game = PlayerGameStat.objects.order_by('-game_date').first()
+    latest_game_date = latest_game.game_date if latest_game else datetime(2025,3,17).date()
+
+    new_rows = new_data[new_data['gameDate'] > latest_game_date].copy()
+    new_rows.loc[new_rows['playerteamCity'] == 'LA', 'playerteamCity'] = 'Los Angeles'
+    new_rows.loc[new_rows['opponentteamCity'] == 'LA', 'opponentteamCity'] = 'Los Angeles'    
+
+    if new_rows.empty:
+        print("No new game data found.")
+        return False
+
+    objs = []
+    for _, row in new_rows.iterrows():
+        player_name = row['firstName'].strip() + ' ' + row['lastName'].strip()
+        player, _ = Player.objects.get_or_create(name=player_name)
+
+        objs.append(PlayerGameStat(
+            player=player,
+            game_date = row['gameDate'],
+                    game_type = row['gameType'] if pd.notnull(row['gameType']) else None,
+                    team = row['playerteamCity'] + ' ' + row['playerteamName'],
+                    opponent = row['opponentteamCity'] + ' ' + row['opponentteamName'],
+                    win = int(row['win']),
+                    home = int(row['home']),
+                    minutes = parse_float(row['numMinutes']),
+                    points = parse_float(row['points']),
+                    assists = parse_float(row['assists']),
+                    blocks = parse_float(row['blocks']),
+                    steals = parse_float(row['steals']),
+                    fg_percent = parse_float(row['fieldGoalsPercentage']),
+                    threepa = parse_float(row['threePointersAttempted']),
+                    threep = parse_float(row['threePointersMade']),
+                    threep_percent = parse_float(row['threePointersPercentage']),
+                    fta = parse_float(row['freeThrowsAttempted']),
+                    ft = parse_float(row['freeThrowsMade']),
+                    ft_percent = parse_float(row['freeThrowsPercentage']),
+                    total_rebounds = parse_float(row['reboundsTotal']),
+                    personal_fouls = parse_float(row['foulsPersonal']),
+                    turnovers = parse_float(row['turnovers']),
+        ))
+
+    PlayerGameStat.objects.bulk_create(objs)
+    print(f"Inserted {len(objs)} new PlayerGameStat rows")
+
+    total_rows = PlayerGameStat.objects.count()
+    if total_rows > MAX_ROWS:
+        excess = total_rows - MAX_ROWS
+        oldest_objs = PlayerGameStat.objects.order_by('game_date')[:excess]
+        PlayerGameStat.objects.filter(pk__in=[o.pk for o in oldest_objs]).delete()
+        print(f"Deleted {excess} oldest rows to maintain MAX_ROWS")
+
+    return True
+
+def retrain_and_upload():
+    model_path = train_and_save_model()
+    model_filename = os.path.basename(model_path)  # "player_multioutput_projection.pkl"
+    if not model_path:
+        print("Training skipped (no data available).")
+        return
+
+    upload_file(
+        path_or_fileobj=model_path,
+        path_in_repo=model_filename,
+        repo_id=HF_REPO,
+        repo_type="model",
+        commit_message=f"Auto update: retrained on {datetime.now()}",
+    )
+    print("Uploaded latest model to Hugging Face")
+
+if __name__ == "__main__":
+    print("Starting daily update pipeline...")
+    download_latest_dataset()
+    if update_database():
+        retrain_and_upload()
+    else:
+        print("No new data, skipping retraining.")
+    print("Daily update complete.")
