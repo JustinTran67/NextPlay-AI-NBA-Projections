@@ -1,4 +1,4 @@
-# NextPlayAI - NBA Performance Predictor
+# NextPlayAI - Basketball Projections
 
 <div align="center">
 
@@ -24,7 +24,6 @@ A full-stack machine learning application that predicts NBA player performance u
 - [Usage](#usage)
 - [API Documentation](#api-documentation)
 - [Project Structure](#project-structure)
-- [Future Enhancements](#future-enhancements)
 - [Disclaimer](#disclaimer)
 
 ---
@@ -371,30 +370,6 @@ NBA-Performance-Predictor/
 │   └── tailwind.config.js    # Tailwind configuration
 └── README.md                 # This file
 ```
-
----
-
-## 🔮 Future Enhancements
-
-### Planned Features
-- [ ] **Deep Learning Models**: Experiment with LSTM/GRU for time-series predictions
-- [ ] **Injury Tracking**: Integrate injury reports into predictions
-- [ ] **Matchup Analysis**: Opponent-specific performance predictions
-- [ ] **Confidence Intervals**: Provide prediction uncertainty ranges
-- [ ] **Real-time Updates**: WebSocket integration for live game stats
-- [ ] **Advanced Visualizations**: Interactive charts for performance trends
-- [ ] **Mobile App**: Native iOS/Android applications
-- [ ] **Fantasy Basketball Integration**: DFS lineup optimization
-- [ ] **A/B Testing Framework**: Compare different model architectures
-- [ ] **Explainable AI**: SHAP values for prediction interpretability
-
-### Technical Improvements
-- [ ] Docker containerization for easier deployment
-- [ ] CI/CD pipeline with GitHub Actions
-- [ ] Comprehensive unit and integration tests
-- [ ] Redis caching for API responses
-- [ ] GraphQL API option
-- [ ] Elasticsearch for advanced player search
 
 ---
 
