@@ -15,14 +15,14 @@ export default function RecommendedPlayers({ name, team, opponent }) {
     }, [name, team, opponent]);
 
     return (
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center opacity-0 animate-fadeUp [animation-delay:2s]">
             <div>
                 <h3 className="font-bold text-[24px] mb-4">Recommended predictions</h3>
             </div>
             <div className="w-[500px] max-h-[400px] overflow-y-auto bg-secondary rounded-lg shadow-lg scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 mb-10">
                 <ul className="p-6">
                     {recommendedPlayers.map((player) => 
-                        <li key={player.id}>
+                        <li className="opacity-0 animate-fadeUp [animation-delay:2.5s]" key={player.id}>
                             <PlayerCard name={player.name} team={player.team} />
                         </li>
                     )}

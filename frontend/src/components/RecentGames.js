@@ -14,7 +14,7 @@ export default function RecentGames({ playerName }) {
     }, [playerName]);
     
     return (    
-        <div className="flex flex-col items-center mb-20">
+        <div className="flex flex-col items-center mb-20 opacity-0 animate-fadeUp [animation-delay:1s]">
             <h3 className="text-[24px] mb-4 font-bold">Last 10 Games</h3>
             <div className="w-[1000px] rounded-xl p-8 bg-secondary font-semibold">
                 <div className="grid grid-cols-[1fr,repeat(6,80px)] items-center mb-4 font-bold text-right">
@@ -29,7 +29,7 @@ export default function RecentGames({ playerName }) {
 
                 <ul>
                     {recentGames.map((game, index) => (
-                        <li key={index}>
+                        <li className="opacity-0 animate-fadeUp [animation-delay:1.5s]" key={index}>
                             <GameCard
                                 team={game.team}
                                 opponent={game.opponent}

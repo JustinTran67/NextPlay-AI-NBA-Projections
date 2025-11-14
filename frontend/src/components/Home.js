@@ -51,18 +51,22 @@ export default function Home() {
 
     return (
         <div className="flex flex-col items-center">
-            <h1 className="mt-20 mb-20 justify-center text-center tracking-wide text-[64px] font-bold">
+            <h1 className="mb-20 justify-center text-center tracking-wide text-[64px] font-bold opacity-0 animate-fadeUp">
                 NextPlay 🏀
             </h1>
             <SearchBar filterPlayers={filterPlayers} setFilterPlayers={setFilterPlayers} />
             <PlayerList playerData={players} filterPlayers={filterPlayers} />
+            <div className="w-[600px] opacity-0 animate-fadeUp [animation-delay:1.5s]">
+                <p className="text-[32px] mb-8 font-bold">On demand <span className="text-nbared">basketball projections</span>, looking into the future of the NBA</p>
+                <p className="text-xl">Search for players, enter their next game, let us predict. <span className="font-bold">Easy!</span></p>
+            </div>
         </div>
     )
 }
 
 function SearchBar({filterPlayers, setFilterPlayers}) {
     return (
-        <div className="">
+        <div className="opacity-0 animate-fadeUp [animation-delay:0.5s]">
             <input className="rounded-3xl mb-10 p-2 h-[50px] w-[600px] px-8 bg-accent placeholder-silver"
                type="text" value={filterPlayers} onChange={(e) => setFilterPlayers(e.target.value)} placeholder="Search players to get projections..."
             />
@@ -72,11 +76,11 @@ function SearchBar({filterPlayers, setFilterPlayers}) {
 
 function PlayerList({playerData, filterPlayers}) {
     return (
-        <div className="w-[450px] max-h-[400px] overflow-y-auto bg-secondary rounded-lg shadow-lg scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
+        <div className="mb-40 w-[450px] h-[400px] overflow-y-auto bg-secondary rounded-lg shadow-lg scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 opacity-0 animate-fadeUp [animation-delay:1s]">
             <ul className="p-6">
                 {playerData.map((player) => 
                     {return (player.name.toLowerCase().includes(filterPlayers.toLowerCase()) || player.team.toLowerCase().includes(filterPlayers.toLowerCase())) ?
-                        <li key={player.id}>
+                        <li className="" key={player.id}>
                             <PlayerCard name={player.name} team={player.team} />
                         </li>
                     : null}

@@ -76,8 +76,8 @@ export default function InputGameData({ playerName, teamName }) {
     }
 
     return (
-        <div className="rounded-xl p-8 bg-secondary">
-            <h1 className="font-bold text-[32px] mb-40">Enter Game Night for {gameData.playerName}</h1>
+        <div className="rounded-xl p-8 bg-secondary opacity-0 animate-fadeUp mb-20">
+            <h1 className="font-bold text-[32px] mb-40">Enter game night for {gameData.playerName}</h1>
             <div className="mb-10 font-semibold">
                 <select className="rounded-lg h-[40px] w-[200px] px-4 bg-accent m-1 hover:bg-secondary transition duration-200 ease-in-out" name="month" value={gameData.month} onChange={handleDateChange}>
                     <option value="">Month</option>
@@ -111,8 +111,8 @@ export default function InputGameData({ playerName, teamName }) {
                 </select>
             </div>
             <div>
-                <button className="rounded-lg h-[40px] w-[300px] px-4 font-bold bg-nbared m-2 hover:bg-nbared2 transition duration-200 ease-in-out" onClick={(gameData.opponent && gameData.date && gameData.home) ? handleClick : handleDisabledClick}>
-                    Get predictions!
+                <button className="rounded-lg h-[40px] w-[300px] px-4 font-bold bg-nbared m-2 hover:bg-nbared2 transition duration-200 ease-in-out opacity-0 animate-fadeUp [animation-delay:0.5s]" onClick={(gameData.opponent && gameData.date && gameData.home) ? handleClick : handleDisabledClick}>
+                    Get prediction!
                 </button>
             </div>
         </div>

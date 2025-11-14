@@ -110,16 +110,16 @@ NextPlayAI is an end-to-end data science and web development project that levera
 │  │   - Parse and validate records    │  │
 │  │   - Update MySQL database         │  │
 │  └───────────────┬───────────────────┘  │
-│                  │                       │
+│                  │                      │
 │  ┌───────────────▼───────────────────┐  │
-│  │   ML Pipeline (train_model2.py)  │  │
+│  │   ML Pipeline (train_model2.py)   │  │
 │  │   - Feature engineering           │  │
 │  │   - Random Forest training        │  │
 │  │   - Model evaluation              │  │
 │  └───────────────┬───────────────────┘  │
-│                  │                       │
+│                  │                      │
 │  ┌───────────────▼───────────────────┐  │
-│  │   REST API (DRF)                 │  │
+│  │   REST API (DRF)                  │  │
 │  │   - Player endpoints              │  │
 │  │   - Prediction endpoints          │  │
 │  │   - JWT authentication            │  │
@@ -316,7 +316,7 @@ Authorization: Bearer <your_jwt_token>
 ```
 
 ```http
-GET /api/players/{id}/
+GET /api/players/?search=<player_name>
 Authorization: Bearer <your_jwt_token>
 
 # Returns detailed player information and prediction
@@ -325,7 +325,7 @@ Authorization: Bearer <your_jwt_token>
 ### Prediction Endpoint
 
 ```http
-POST /api/predict/
+POST /api/player-predictions/
 Authorization: Bearer <your_jwt_token>
 Content-Type: application/json
 
@@ -403,7 +403,7 @@ This project was created solely for **educational and portfolio demonstration pu
 For questions, opportunities, or collaboration:
 
 - **GitHub**: @JustinTran67
-- **LinkedIn**: linkedin.com/in/justin-tran-902938355/
+- **LinkedIn**: https://www.linkedin.com/in/justin-tran-902938355/
 - **Email**: justinttran06@gmail.com
 
 ---

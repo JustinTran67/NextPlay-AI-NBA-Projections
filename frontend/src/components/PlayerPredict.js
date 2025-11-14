@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import RecentGames from './RecentGames';
+import RecommendedPlayers from './RecommendedPlayers';
+import logo from '../assets/Logo.png';
 
 export default function PlayerPredict({ name, team, opponent, date, home }) {
 
@@ -38,14 +41,18 @@ export default function PlayerPredict({ name, team, opponent, date, home }) {
         fetchPrediction();
     }, [name, opponent, date, home]);
     
+    // manually calculate three point and free throw percentages based on predicted made and attempted.
+    const threep_percent = predictionData? Math.round(predictionData.predictions.threep) / Math.round(predictionData.predictions.threepa) * 100 : 0
+    const ft_percent = predictionData? Math.round(predictionData.predictions.ft) / Math.round(predictionData.predictions.fta) * 100 : 0
+
     return (
         <div className="flex flex-col items-center mb-10">
             {predictionData ? (
                  <div className="flex flex-col items-center">
                     <div>
-                        <h2 className="font-bold text-[32px] mb-4">{predictionData.player} vs {predictionData.opponent}</h2>
+                        <h2 className="font-bold text-[32px] mb-4 opacity-0 animate-fadeUp">{predictionData.player} vs {predictionData.opponent}</h2>
                     </div>
-                    <div className="w-[700px] rounded-xl p-8 bg-secondary mb-10 font-semibold text-left text-[20px]">
+                    <div className="w-[700px] rounded-xl p-8 bg-secondary mb-20 font-semibold text-left text-[20px] opacity-0 animate-fadeUp [animation-delay:0.5s]">
                         <p>Minutes: {predictionData.predictions.minutes.toFixed(2)}</p>
                         <p>Points: {Math.round(predictionData.predictions.points)}</p>
                         <p>Rebounds: {Math.round(predictionData.predictions.total_rebounds)}</p>
@@ -55,16 +62,21 @@ export default function PlayerPredict({ name, team, opponent, date, home }) {
                         <p>Field Goal Percent: {Math.round(predictionData.predictions.fg_percent * 100)}%</p>  
                         <p>Three Pointers Attempted: {Math.round(predictionData.predictions.threepa)}</p>
                         <p>Three Pointers: {Math.round(predictionData.predictions.threep)}</p>
-                        <p>Three Point Percent: {Math.round(predictionData.predictions.threep_percent * 100)}%</p>
+                        <p>Three Point Percent: {Math.round(threep_percent)}%</p>
                         <p>Free Throws Attempted: {Math.round(predictionData.predictions.fta)}</p>
                         <p>Free Throws: {Math.round(predictionData.predictions.ft)}</p>
-                        <p>Free Throw Percent: {Math.round(predictionData.predictions.ft_percent * 100)}%</p>
+                        <p>Free Throw Percent: {Math.round(ft_percent)}%</p>
                         <p>Personal Fouls: {Math.round(predictionData.predictions.personal_fouls)}</p>
                         <p>Turnovers: {Math.round(predictionData.predictions.turnovers)}</p>
                     </div>
+                    <RecentGames playerName={name} />
+                    <RecommendedPlayers name={name} team={team} opponent={opponent} />
                 </div>
                 ) : (
-                     <p>Loading prediction...</p>
+                    <div className="mt-40">
+                        <img className="w-[300px] h-[300px] animate-slowSpin mb-10" src={logo} alt="NextPlay logo"></img>
+                        <p className="text-[32px] font-bold">Loading prediction...</p>
+                    </div>
                 )}
         </div>
     )
