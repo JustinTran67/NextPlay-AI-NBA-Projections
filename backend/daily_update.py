@@ -69,6 +69,13 @@ def update_database():
         player_name = row['firstName'].strip() + ' ' + row['lastName'].strip()
         player, _ = Player.objects.get_or_create(name=player_name)
 
+        #trade detection
+        current_team = row['playerteamCity'] + ' ' + row['playerteamName']
+        if player.team != current_team:
+            print(f"[TRADE DETECTED] {player_name} moved from {player.team} to {current_team}")
+            player.team = current_team
+            player.save()
+
         objs.append(PlayerGameStat(
             player=player,
             game_date = row['gameDate'],

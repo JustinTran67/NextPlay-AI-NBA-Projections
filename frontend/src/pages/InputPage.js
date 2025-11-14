@@ -11,7 +11,7 @@ export default function InputPage() {
             <InputGameData playerName={playerName} teamName={teamName}/>
             <div className="w-[500px] p-4 rounded-lg opacity-0 animate-fadeUp [animation-delay:1s]">
                 <p className="text-[32px] font-bold mb-4">Pro Tip</p>
-                <p className="text-xl">Input the nearest upcoming game for the most accurate prediction!</p>
+                <p className="text-xl">Input the <span className="text-nbared font-bold">nearest upcoming game</span> for the most accurate prediction!</p>
             </div>
         </div>
     )

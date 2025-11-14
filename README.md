@@ -201,7 +201,7 @@ The `daily_update.py` script handles:
 ```bash
 # Clone the repository
 git clone <repository-url>
-cd NBA-Performance-Predictor/backend
+cd NextPlay-AI/backend
 
 # Create and activate virtual environment
 python -m venv venv
@@ -343,7 +343,7 @@ Content-Type: application/json
 ## 📁 Project Structure
 
 ```
-NBA-Performance-Predictor/
+NextPlay-AI/
 ├── backend/
 │   ├── backendApp/           # Main Django application
 │   │   ├── models.py         # Database models (Player, PlayerGameStat)

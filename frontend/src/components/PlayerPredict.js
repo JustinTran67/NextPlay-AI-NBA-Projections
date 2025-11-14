@@ -42,8 +42,8 @@ export default function PlayerPredict({ name, team, opponent, date, home }) {
     }, [name, opponent, date, home]);
     
     // manually calculate three point and free throw percentages based on predicted made and attempted.
-    const threep_percent = predictionData? Math.round(predictionData.predictions.threep) / Math.round(predictionData.predictions.threepa) * 100 : 0
-    const ft_percent = predictionData? Math.round(predictionData.predictions.ft) / Math.round(predictionData.predictions.fta) * 100 : 0
+    const threep_percent = predictionData? ((Math.round(predictionData.predictions.threepa) != 0)? Math.round(predictionData.predictions.threep) / Math.round(predictionData.predictions.threepa) * 100 : 0) : 0
+    const ft_percent = predictionData? ((Math.round(predictionData.predictions.fta) != 0)? Math.round(predictionData.predictions.ft) / Math.round(predictionData.predictions.fta) * 100 : 0) : 0
 
     return (
         <div className="flex flex-col items-center mb-10">

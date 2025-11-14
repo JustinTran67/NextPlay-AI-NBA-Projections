@@ -5,7 +5,11 @@ module.exports = {
   ],
   theme: {
     extend: {
-      //Custom Colors
+      // Fonts
+      fontFamily: {
+        inter: ['Inter', 'sans-serif'],
+      },
+      // Custom Colors
       colors: {
         primary: '#0A1128',
         secondary: '#1E2749',
@@ -16,7 +20,7 @@ module.exports = {
         dark: '#2C2C2C',
         silver: '#D9D9D9',
       },
-      //Animations
+      // Animations
       keyframes: {
         fadeUp: {
           '0%': { opacity: 0, transform: 'translateY(30px)' },
